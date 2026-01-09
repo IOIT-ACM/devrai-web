@@ -1,15 +1,22 @@
 "use client";
-import React, { useState } from "react";
-import { GALLERY_IMAGES } from "@/constants";
+
+import React, { useState, useEffect } from "react";
+import { useContentStore } from "@/store/contentStore";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 import Image from "next/image";
 
 const Gallery: React.FC = () => {
+	const { galleryImages, fetchGallery, galleryLoading } = useContentStore();
 	const [filter, setFilter] = useState<"All" | "Camp" | "Competition">("All");
+
+	useEffect(() => {
+		fetchGallery();
+	}, [fetchGallery]);
 
 	const filteredImages =
 		filter === "All"
-			? GALLERY_IMAGES
-			: GALLERY_IMAGES.filter((img) => img.category === filter);
+			? galleryImages
+			: galleryImages.filter((img) => img.category === filter);
 
 	const filters: ("All" | "Camp" | "Competition")[] = [
 		"All",
@@ -50,33 +57,37 @@ const Gallery: React.FC = () => {
 
 				{/* Grid */}
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-					{filteredImages.map((image) => (
-						<div
-							key={image.id}
-							className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
-						>
-							<Image
-								src={image.url}
-								alt={image.title}
-								fill
-								className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-								loading="lazy"
-							/>
-							<div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
-								<div className="p-4 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-									<p className="text-white font-medium text-sm md:text-base">
-										{image.title}
-									</p>
-									<span className="text-white/80 text-xs uppercase tracking-wider">
-										{image.category}
-									</span>
+					{galleryLoading ? (
+						<LoadingSkeleton variant="image" count={8} />
+					) : (
+						filteredImages.map((image) => (
+							<div
+								key={image.id}
+								className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
+							>
+								<Image
+									src={image.url}
+									alt={image.title}
+									fill
+									className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+									loading="lazy"
+								/>
+								<div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
+									<div className="p-4 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+										<p className="text-white font-medium text-sm md:text-base">
+											{image.title}
+										</p>
+										<span className="text-white/80 text-xs uppercase tracking-wider">
+											{image.category}
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
-					))}
+						))
+					)}
 				</div>
 
-				{filteredImages.length === 0 && (
+				{!galleryLoading && filteredImages.length === 0 && (
 					<div className="text-center py-12">
 						<p className="text-gray-500">No photos found in this category.</p>
 					</div>

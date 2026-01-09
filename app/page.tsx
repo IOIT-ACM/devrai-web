@@ -1,11 +1,21 @@
-import { EVENTS } from "@/constants";
+"use client";
+
+import { useEffect } from "react";
+import { useContentStore } from "@/store/contentStore";
 import { ArrowRight, Leaf, AtomIcon, Palette } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import EventCard from "./components/EventCard";
+import LoadingSkeleton from "./components/LoadingSkeleton";
 
 export default function Home() {
-	const latestEvents = EVENTS.filter((e) => !e.isPast).slice(0, 3);
+	const { events, fetchEvents, eventsLoading } = useContentStore();
+
+	useEffect(() => {
+		fetchEvents();
+	}, [fetchEvents]);
+
+	const latestEvents = events.filter((e) => !e.isPast).slice(0, 3);
 
 	return (
 		<div className="animate-in fade-in duration-500">
@@ -125,9 +135,13 @@ export default function Home() {
 					</div>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-						{latestEvents.map((event) => (
-							<EventCard key={event.id} event={event} />
-						))}
+						{eventsLoading ? (
+							<LoadingSkeleton variant="card" count={3} />
+						) : (
+							latestEvents.map((event) => (
+								<EventCard key={event.id} event={event} />
+							))
+						)}
 					</div>
 				</div>
 			</section>

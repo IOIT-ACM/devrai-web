@@ -1,10 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import EventCard from "../../components/EventCard";
-import { EVENTS } from "@/constants";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+import { useContentStore } from "@/store/contentStore";
 
 const Activities: React.FC = () => {
-	const upcomingEvents = EVENTS.filter((e) => !e.isPast);
-	const pastEvents = EVENTS.filter((e) => e.isPast);
+	const { events, fetchEvents, eventsLoading } = useContentStore();
+
+	useEffect(() => {
+		fetchEvents();
+	}, [fetchEvents]);
+
+	const upcomingEvents = events.filter((e) => !e.isPast);
+	const pastEvents = events.filter((e) => e.isPast);
 
 	return (
 		<div className="min-h-screen bg-gray-50 pb-20">
@@ -30,7 +39,11 @@ const Activities: React.FC = () => {
 						</h2>
 					</div>
 
-					{upcomingEvents.length > 0 ? (
+					{eventsLoading ? (
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							<LoadingSkeleton variant="card" count={3} />
+						</div>
+					) : upcomingEvents.length > 0 ? (
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 							{upcomingEvents.map((event) => (
 								<EventCard key={event.id} event={event} />
@@ -47,7 +60,7 @@ const Activities: React.FC = () => {
 				</div>
 
 				{/* Past Section */}
-				{pastEvents.length > 0 && (
+				{!eventsLoading && pastEvents.length > 0 && (
 					<div>
 						<div className="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-gray-400">
 							<h2 className="text-2xl font-bold font-display text-gray-800">

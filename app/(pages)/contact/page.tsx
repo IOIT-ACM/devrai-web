@@ -1,8 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { Phone, MapPin, Mail, User } from "lucide-react";
-import { CONTACT_INFO } from "@/constants";
+import { useContentStore } from "@/store/contentStore";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 const Contact: React.FC = () => {
+	const { contactInfo, fetchContact, contactLoading } = useContentStore();
+
+	useEffect(() => {
+		fetchContact();
+	}, [fetchContact]);
+
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<div className="bg-primary py-16">
@@ -24,14 +33,17 @@ const Contact: React.FC = () => {
 							Contact Details
 						</h2>
 
-						<div className="space-y-6">
-							<div className="flex items-start gap-4">
-								<div className="bg-orange-100 p-3 rounded-full text-primary">
-									<User className="h-6 w-6" />
-								</div>
-								<div>
-									<h3 className="font-bold text-gray-900">Coordinator</h3>
-									<p className="text-gray-600">{CONTACT_INFO.person}</p>
+						{contactLoading ? (
+							<LoadingSkeleton variant="contact" count={3} />
+						) : (
+							<div className="space-y-6">
+								<div className="flex items-start gap-4">
+									<div className="bg-orange-100 p-3 rounded-full text-primary">
+										<User className="h-6 w-6" />
+									</div>
+									<div>
+										<h3 className="font-bold text-gray-900">Coordinator</h3>
+									<p className="text-gray-600">{contactInfo.person}</p>
 								</div>
 							</div>
 
@@ -41,7 +53,7 @@ const Contact: React.FC = () => {
 								</div>
 								<div>
 									<h3 className="font-bold text-gray-900">Phone</h3>
-									{CONTACT_INFO.phone.map((phone) => (
+									{contactInfo.phone.map((phone) => (
 										<p key={phone} className="text-gray-600">
 											{phone}
 										</p>
@@ -62,11 +74,12 @@ const Contact: React.FC = () => {
 								</div>
 							</div>
 						</div>
+						)}
 					</div>
 
 					{/* Maps Section */}
 					<div className="lg:col-span-2 space-y-8">
-						{CONTACT_INFO.locations.map((loc, index) => (
+						{contactInfo.locations.map((loc, index) => (
 							<div
 								key={index}
 								className="bg-white rounded-xl shadow-md overflow-hidden"
