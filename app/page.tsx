@@ -23,8 +23,8 @@ export default function Home() {
 			<section className="relative h-[80vh] min-h-125 flex items-center justify-center overflow-hidden">
 				<div className="absolute inset-0 z-0">
 					<Image
-						src="/hero.jpg"
-						alt="Nature Background"
+						src="/hero.png"
+						alt="Collage showing various activities performed by Devrai Vidnyan Ashram NGO."
 						fill={true}
 						className="w-full h-full object-cover"
 					/>

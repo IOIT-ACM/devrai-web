@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { Event, GalleryImage, ContactInfo } from "@/types";
-import { EVENTS, GALLERY_IMAGES, CONTACT_INFO } from "@/constants";
+import { ContactInfo, Event, GalleryImage } from "@/types";
+import { CONTACT_INFO, EVENTS, GALLERY_IMAGES } from "@/constants";
 import { client } from "@/sanity/client";
-import { eventsQuery, galleryQuery, contactQuery } from "@/sanity/queries";
+import { contactQuery, eventsQuery, galleryQuery } from "@/sanity/queries";
 
 interface ContentState {
     // Data

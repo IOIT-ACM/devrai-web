@@ -43,37 +43,37 @@ const Contact: React.FC = () => {
 									</div>
 									<div>
 										<h3 className="font-bold text-gray-900">Coordinator</h3>
-									<p className="text-gray-600">{contactInfo.person}</p>
+										<p className="text-gray-600">{contactInfo.person}</p>
+									</div>
 								</div>
-							</div>
 
-							<div className="flex items-start gap-4">
-								<div className="bg-teal-100 p-3 rounded-full text-secondary">
-									<Phone className="h-6 w-6" />
-								</div>
-								<div>
-									<h3 className="font-bold text-gray-900">Phone</h3>
-									{contactInfo.phone.map((phone) => (
-										<p key={phone} className="text-gray-600">
-											{phone}
+								<div className="flex items-start gap-4">
+									<div className="bg-teal-100 p-3 rounded-full text-secondary">
+										<Phone className="h-6 w-6" />
+									</div>
+									<div>
+										<h3 className="font-bold text-gray-900">Phone</h3>
+										{contactInfo.phone.map((phone) => (
+											<p key={phone} className="text-gray-600">
+												{phone}
+											</p>
+										))}
+										<p className="text-xs text-gray-400 mt-1">
+											Available 9 AM - 6 PM
 										</p>
-									))}
-									<p className="text-xs text-gray-400 mt-1">
-										Available 9 AM - 6 PM
-									</p>
+									</div>
 								</div>
-							</div>
 
-							<div className="flex items-start gap-4">
-								<div className="bg-orange-100 p-3 rounded-full text-primary">
-									<Mail className="h-6 w-6" />
-								</div>
-								<div>
-									<h3 className="font-bold text-gray-900">Email</h3>
-									<p className="text-gray-600">info@devraiashram.org</p>
+								<div className="flex items-start gap-4">
+									<div className="bg-orange-100 p-3 rounded-full text-primary">
+										<Mail className="h-6 w-6" />
+									</div>
+									<div>
+										<h3 className="font-bold text-gray-900">Email</h3>
+										<p className="text-gray-600">info@devraiashram.org</p>
+									</div>
 								</div>
 							</div>
-						</div>
 						)}
 					</div>
 
