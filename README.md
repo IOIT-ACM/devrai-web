@@ -1,19 +1,61 @@
 # Devrai Vidnyan Ashram Website
 
-Official website for Devrai Vidnyan Ashram NGO, built with [Next.js](https://nextjs.org).
+Devrai Vidnyan Ashram is an educational institute dedicated to promoting scientific thinking, creativity and reading habits among students. This website serves as an official platform to create awareness about its programs, share updates, and inform students, parents, and the community about the upcoming educational activities.
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS
+- **Language**: Typescript
+- **State Management**: Zustand (for UI state)
+- **CMS**: Sanity.io (Headless CMS for content)
+- **Hosting**: Vercel
 
 ## Getting Started
 
 ```bash
+# Install dependencies
 npm install
+
+# Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
+
+## Project Structure
+
+```
+├── app/                    # Next.js App Router
+│   ├── components/         # Reusable UI components
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   ├── (pages)/            # Route groups
+│   └── page.tsx            # Home page
+│
+├── public/                 # Static assets
+│
+├── sanity/                 # Sanity CMS setup
+│   ├── client.ts           # Sanity client
+│   └── queries.ts          # GROQ queries
+│
+├── store/                  # Global state
+│   └── contentStore.ts
+│
+├── constants.ts            # App constants
+├── types.ts                # Global TypeScript types
+│
+├── next.config.ts          # Next.js config
+├── eslint.config.mjs       # ESLint config
+├── tsconfig.json           # TypeScript config
+├── package.json            # Dependencies & scripts
+└── README.md               # Documentation
+```
+
 
 ## Contributing
 
-This is a private repository. Please follow these guidelines when contributing:
+This is a public repository. Please follow these guidelines when contributing:
 
 ### Branch Workflow
 
